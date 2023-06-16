@@ -3,9 +3,14 @@
 
 
 void select_handler(void* ctx, uint32_t index) {
-    UNUSED(ctx);
+    FURI_LOG_D("MENUINT", "Entered menu handler");
+
+    MenuIntegration* instance = ctx;
+
     if (index == MainMenuItemDialog) {
-	FURI_LOG_D("MENUINT", "Handler fired for dialog.");
+	view_dispatcher_switch_to_view(
+            instance->view_dispatcher,
+            MenuIntegrationViewDialog);	
     }
 }
 
