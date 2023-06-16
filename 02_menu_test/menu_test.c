@@ -1,7 +1,6 @@
 #include <furi.h>
 #include <gui/gui.h>
 #include <gui/modules/submenu.h>
-#include <gui/modules/submenu.h>
 #include <gui/view_dispatcher.h>
 #include <gui/scene_manager.h>
 
