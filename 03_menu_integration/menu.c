@@ -1,7 +1,8 @@
 #include "menu.h"
+#include "menu_integration.h"
 
 
-void dummy_handler(void* ctx, uint32_t index) {
+void select_handler(void* ctx, uint32_t index) {
     UNUSED(ctx);
     UNUSED(index);
 }
@@ -11,14 +12,14 @@ void menu_integration_submenu_init(Submenu* submenu, void* ctx) {
 	submenu,
 	"Display Dialog",
 	MainMenuItemDialog,
-	dummy_handler,
+	select_handler,
 	ctx
     );		
     submenu_add_item(
 	submenu,
 	"Display File Browser",
 	MainMenuItemFileBrowser,
-	dummy_handler,
+	select_handler,
 	ctx
     );		
 }

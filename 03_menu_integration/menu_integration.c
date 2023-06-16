@@ -1,24 +1,13 @@
-#include <furi.h>
-#include <gui/gui.h>
-#include <gui/modules/submenu.h>
-#include <gui/view_dispatcher.h>
-#include <gui/scene_manager.h>
 
 #include "menu.h"
-
-// This is the model for the application. 
-// It is a store for all of the data relevant to running our app. 
-typedef struct {
-    Gui* gui;
-    ViewDispatcher* view_dispatcher;
-    Submenu* submenu;
-    SceneManager* scene_manager;
-} MenuTest;
+#include "menu_integration.h"
 
 // List of views for the ViewDispatcher. 
 // This is used to set indices in the init functions. 
 typedef enum {
     MenuTestViewSubmenu,
+    MenuTestViewDialog,
+    MenuTestViewMAX,
 } MenuTestView;
 
 // "Navigation callbacks" handle back-arrow events.
