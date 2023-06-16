@@ -19,6 +19,7 @@ void informative_dialog_init(DialogEx* dialog, void* ctx){
 	FURI_LOG_D("MENUINT", "Setting dialog result callback...");
 	dialog_ex_set_result_callback(dialog, dialog_result_callback);
 
+	// The events for dialog buttons WON'T FIRE unless you define a label for the respective button.
 	dialog_ex_set_left_button_text(dialog, "Menu");
 
 	dialog_ex_set_header(
