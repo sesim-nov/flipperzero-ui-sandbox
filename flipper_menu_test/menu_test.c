@@ -60,10 +60,17 @@ MenuTest* menu_test_alloc() {
     return instance;
 }
 
+// Deallocate everything we included in our model. 
+// The idea here is to follow the one-free-per-alloc rule. 
 void menu_test_free(MenuTest* instance) {
+    // Close down our link to the GUI. 
+    // Still shaky on exactly what a furi record is. 
     FURI_LOG_D("MENUTEST", "Closing gui record");
     furi_record_close("gui");
     
+    // I discovered that if you fail to remove the view prior to
+    // deallocating the dispatcher, the program will hang. 
+    // One day I'll debug to find out exactly why that happens. 
     view_dispatcher_remove_view(instance->view_dispatcher, MenuTestViewSubmenu);
     FURI_LOG_D("MENUTEST", "Freeing Dispatcher");
     view_dispatcher_free(instance->view_dispatcher);
@@ -75,12 +82,16 @@ void menu_test_free(MenuTest* instance) {
 int menu_test_app(void *p) {
     UNUSED(p);
 
+    // Allocate our app
     MenuTest* app = menu_test_alloc();
 
+    // Actually start the view dispatcher. This is the line that actually 
+    // starts the main loop of the program. 
     FURI_LOG_D("MENUTEST", "Entering View Dispatcher");
     view_dispatcher_run(app->view_dispatcher);
     FURI_LOG_D("MENUTEST", "Exiting View Dispatcher");
 
+    // Deallocate our app
     menu_test_free(app);
 
     int a = 0;
