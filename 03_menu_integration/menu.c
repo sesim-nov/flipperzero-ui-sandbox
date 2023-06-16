@@ -9,15 +9,15 @@ void dummy_handler(void* ctx, uint32_t index) {
 void menu_integration_submenu_init(Submenu* submenu, void* ctx) {
     submenu_add_item(
 	submenu,
-	"Sesim wuz here",
-	MainMenuItemSesim,
+	"Display Dialog",
+	MainMenuItemDialog,
 	dummy_handler,
 	ctx
     );		
     submenu_add_item(
 	submenu,
-	"Hello Flipper",
-	MainMenuItemHello,
+	"Display File Browser",
+	MainMenuItemFileBrowser,
 	dummy_handler,
 	ctx
     );		
