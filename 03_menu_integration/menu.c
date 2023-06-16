@@ -4,7 +4,9 @@
 
 void select_handler(void* ctx, uint32_t index) {
     UNUSED(ctx);
-    UNUSED(index);
+    if (index == MainMenuItemDialog) {
+	FURI_LOG_D("MENUINT", "Handler fired for dialog.");
+    }
 }
 
 void menu_integration_submenu_init(Submenu* submenu, void* ctx) {
