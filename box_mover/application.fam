@@ -1,0 +1,13 @@
+App(
+    appid="box_mover",
+    apptype=FlipperAppType.EXTERNAL,
+    name="Box Mover",
+    entry_point="box_mover_app",
+    stack_size=1 * 1024,
+    cdefines=["APP_BOXMOVER"],
+    requires=[
+        "gui",
+    ],
+    order=10,
+    fap_category="Tools",
+)
