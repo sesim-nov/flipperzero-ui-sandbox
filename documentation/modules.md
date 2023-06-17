@@ -86,3 +86,27 @@ dialog_ex_set_center_button_text
 
 There are similar functions for left and right buttons also. 
 It is worth noting that if a label for a given direction isn't defined, the associated input event is ignored and your callbacks won't be called. In order to use a given button in the dialog, you have to define a label for it. 
+
+## File Browser
+
+This is Flipper's builting file browser dialog. It contains everything you need to operate on files as part of your application. 
+
+### Contained In
+
+```
+$FIRMWARE_ROOT/applications/services/gui/modules/file_browser.h
+```
+
+### Callbacks
+
+The File Browser contains two types of callbacks you can set. The first one is the `FileBrowserLoadItemCallback`. this callback seems to be called each time an object is *loaded*, which happens when file browser fetches directory contents to display on screen. It's a bool callback, so I need to figure out what the return status does. Maybe it's intended to be a filter callback? 
+
+This callback can be set by calling `file_browser_set_item_callback`. 
+
+The second callback is `FileBrowserCallback`. This callback is fired when the center button is pushed on a file object (but not a folder). My task 03 code uses this callback to log the path selected, so I think this callback is intended to allow the user to perform the "select" action as needed.
+
+This callback can be set by calling `file_browser_set_callback`.
+
+### Sharing State
+
+The `FileBrowserCallback` does not share any internal state about the Browser object with the callback context. So, it is up to the user to make sure the selected file path information makes it into the context. The file browser allocation function signature lets you pass in a `result_path` variable of type `FuriString`. The internals of the file browser set the selected file path into that object before firing the `FileBrowserCallback` function. With that in mind, it would be prudent to allocate and store the `result_path` object in whatever context you pass into the `FileBrowserCallback`.

@@ -1,0 +1,13 @@
+App(
+    appid="menu_integration",
+    apptype=FlipperAppType.EXTERNAL,
+    name="Menu Integration",
+    entry_point="menu_integration_app",
+    stack_size=1 * 1024,
+    cdefines=["APP_MENUINT"],
+    requires=[
+        "gui",
+    ],
+    order=10,
+    fap_category="Testing",
+)
