@@ -14,7 +14,6 @@ typedef struct {
     ViewDispatcher* view_dispatcher;
     Submenu* submenu;
     DialogEx* dialog;
-    SceneManager* scene_manager;
 } MenuIntegration;
 
 // List of views for the ViewDispatcher. 
