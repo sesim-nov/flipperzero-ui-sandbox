@@ -1,4 +1,5 @@
 #include "my_file_browser.h"
+#include "menu_integration.h"
 
 bool my_file_browser_load_callback(
     FuriString* path,
@@ -15,8 +16,8 @@ bool my_file_browser_load_callback(
 void my_file_browser_callback(
     void* context)
 {
-    UNUSED(context);
-    FURI_LOG_D("MENUINT", "Second Callback called...");
+    MenuIntegration* instance = context;
+    FURI_LOG_D("MENUINT", "Second Callback called on path %s", furi_string_get_cstr(instance->file_browser_selected_path));
 }
 
 void my_file_browser_configure(

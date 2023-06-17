@@ -16,6 +16,7 @@ typedef struct {
     Submenu* submenu;
     DialogEx* dialog;
     FileBrowser* file_browser;
+    FuriString* file_browser_selected_path;
 } MenuIntegration;
 
 // List of views for the ViewDispatcher. 

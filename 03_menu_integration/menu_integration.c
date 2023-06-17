@@ -30,8 +30,9 @@ MenuIntegration* menu_integration_alloc() {
     informative_dialog_init(instance->dialog, instance);
 
     // Allocate our File Browser:
+    instance->file_browser_selected_path = furi_string_alloc();
     instance->file_browser = file_browser_alloc(
-	    furi_string_alloc_set_str("/ext/"));
+	    instance->file_browser_selected_path);
     my_file_browser_configure(instance->file_browser,
 	    ".sub",
 	    "/ext/",
@@ -41,6 +42,7 @@ MenuIntegration* menu_integration_alloc() {
 	    false,
 	    instance
 	    );
+
 
     // Allocate our view dispatcher
     instance->view_dispatcher = view_dispatcher_alloc();

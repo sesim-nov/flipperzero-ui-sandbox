@@ -15,7 +15,7 @@ void select_handler(void* ctx, uint32_t index) {
 	view_dispatcher_switch_to_view(
             instance->view_dispatcher,
             MenuIntegrationViewFileBrowser);	
-	file_browser_start(instance->file_browser, furi_string_alloc_set_str("/ext/"));
+	file_browser_start(instance->file_browser, instance->file_browser_selected_path);
     }
 }
 
