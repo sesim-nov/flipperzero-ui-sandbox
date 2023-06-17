@@ -2,6 +2,7 @@
 #include "menu.h"
 #include "menu_integration.h"
 #include "informative_dialog.h"
+#include "my_file_browser.h"
 
 // "Navigation callbacks" handle back-arrow events.
 // Returning false simply exits the program. 
@@ -31,13 +32,14 @@ MenuIntegration* menu_integration_alloc() {
     // Allocate our File Browser:
     instance->file_browser = file_browser_alloc(
 	    furi_string_alloc_set_str("/ext/"));
-    file_browser_configure(instance->file_browser,
+    my_file_browser_configure(instance->file_browser,
 	    ".sub",
 	    "/ext/",
 	    false,
 	    false,
 	    NULL,
-	    false
+	    false,
+	    instance
 	    );
 
     // Allocate our view dispatcher
