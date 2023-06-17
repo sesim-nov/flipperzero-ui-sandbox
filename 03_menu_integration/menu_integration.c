@@ -28,21 +28,43 @@ MenuIntegration* menu_integration_alloc() {
     instance->dialog = dialog_ex_alloc();
     informative_dialog_init(instance->dialog, instance);
 
+    // Allocate our File Browser:
+    instance->file_browser = file_browser_alloc(
+	    furi_string_alloc_set_str("/ext/"));
+    file_browser_configure(instance->file_browser,
+	    ".sub",
+	    "/ext/",
+	    false,
+	    false,
+	    NULL,
+	    false
+	    );
+
     // Allocate our view dispatcher
     instance->view_dispatcher = view_dispatcher_alloc();
+
     // Add the submenu
     view_dispatcher_add_view(instance->view_dispatcher, 
 	    MenuIntegrationViewSubmenu, 
 	    submenu_get_view(instance->submenu));
+
     // Add the DialogEx Object too
     view_dispatcher_add_view(instance->view_dispatcher, 
 	    MenuIntegrationViewDialog, 
 	    dialog_ex_get_view(instance->dialog));
 
+    // Add the file browser
+    view_dispatcher_add_view(instance->view_dispatcher,
+	MenuIntegrationViewFileBrowser,
+	file_browser_get_view(instance->file_browser));
+
     // Enable the input messsage queue, which allows the view dispatcher to directly handle input events. 
     view_dispatcher_enable_queue(instance->view_dispatcher);
+
+    // Attach to the GUI
     view_dispatcher_attach_to_gui(instance->view_dispatcher, instance->gui, ViewDispatcherTypeFullscreen);
     view_dispatcher_switch_to_view(instance->view_dispatcher, MenuIntegrationViewSubmenu);
+
     // Set view dispatcher's behavior when the back button is pressed. 
     view_dispatcher_set_navigation_event_callback(
 	    instance->view_dispatcher, view_dispatcher_navigation_event_callback);
@@ -61,6 +83,7 @@ void menu_integration_free(MenuIntegration* instance) {
     // I discovered that if you fail to remove the view prior to
     // deallocating the dispatcher, the program will hang. 
     // One day I'll debug to find out exactly why that happens. 
+    view_dispatcher_remove_view(instance->view_dispatcher, MenuIntegrationViewFileBrowser);
     view_dispatcher_remove_view(instance->view_dispatcher, MenuIntegrationViewDialog);
     view_dispatcher_remove_view(instance->view_dispatcher, MenuIntegrationViewSubmenu);
     FURI_LOG_D("MENUTEST", "Freeing Dispatcher");
