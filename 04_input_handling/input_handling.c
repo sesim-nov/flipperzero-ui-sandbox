@@ -1,15 +1,7 @@
 #include <furi.h>
 
 #include "input_handling.h"
-
-/**
- * This lists all available views allocated to our view dispatcher. 
- */
-typedef enum {
-    InputHandlingViewDialog,
-    InputHandlingViewTextInput,
-    InputHandlingViewMAX
-} InputHandlingViews;
+#include "scenes.h"
 
 /**
  * Allocates the memory for an InputHandlingData
@@ -31,8 +23,16 @@ InputHandlingData* input_handling_data_alloc() {
             InputHandlingViewTextInput, 
             text_input_get_view(instance->text_input));
 
+    // Configure View Manager for use with a scene manager. 
+    view_dispatcher_enable_queue(instance->view_dispatcher); // Enable the view dispatcher I/O queue. 
+    view_dispatcher_set_event_callback_context(instance->view_dispatcher, instance); // Set the context all callbacks will use. 
+    view_dispatcher_set_custom_event_callback(instance->view_dispatcher,
+            input_handling_scene_manager_custom_event_callback);
+    view_dispatcher_set_navigation_event_callback(instance->view_dispatcher,
+            input_handling_scene_manager_navigation_event_callback);
 
-    //instance->scene_manager = scene_manager_alloc();
+
+    instance->scene_manager = scene_manager_alloc(&input_handling_scene_manager_handlers, instance);
 
     return instance;
 }
@@ -49,6 +49,8 @@ void input_handling_data_free(InputHandlingData* instance) {
     dialog_ex_free(instance->dialog_ex);
     text_input_free(instance->text_input);
 
+    scene_manager_free(instance->scene_manager);
+
     free(instance);
 }
 
@@ -58,6 +60,17 @@ void input_handling_data_free(InputHandlingData* instance) {
 int input_handling_app() {
     InputHandlingData* app = input_handling_data_alloc();
 
+    // Attach to gui. Could do this in alloc function too...
+    Gui* gui = furi_record_open("gui");
+    view_dispatcher_attach_to_gui(app->view_dispatcher, gui, ViewDispatcherTypeFullscreen);
+
+    //Start scene manager
+    scene_manager_next_scene(app->scene_manager, InputHandlingSceneWelcome);
+
+    //Start view dispatcher
+    view_dispatcher_run(app->view_dispatcher);
+
+    furi_record_close("gui");
     input_handling_data_free(app);
     return 0;
 }

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <gui/scene_manager.h>
 #include <gui/view_dispatcher.h>
 #include <gui/modules/dialog_ex.h>
@@ -13,5 +15,14 @@ typedef struct {
     TextInput* text_input;
     DialogEx* dialog_ex;
 
-    //SceneManager* scene_manager;
+    SceneManager* scene_manager;
 } InputHandlingData;
+
+/**
+ * This lists all available views allocated to our view dispatcher. 
+ */
+typedef enum {
+    InputHandlingViewDialog,
+    InputHandlingViewTextInput,
+    InputHandlingViewMAX
+} InputHandlingViews;
