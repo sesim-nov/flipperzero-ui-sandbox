@@ -5,10 +5,18 @@
 #include <gui/modules/dialog_ex.h>
 #include <gui/modules/text_input.h>
 
+typedef struct {
+    char* input_text;
+    size_t input_text_size;
+} InputHandlingModel;
+
+
 /**
  * This structure tracks the main relevant information about the application.
  */
 typedef struct {
+    InputHandlingModel* model;
+
     ViewDispatcher* view_dispatcher;
     
     //View Dispatcher Views

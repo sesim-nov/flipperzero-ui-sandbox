@@ -3,11 +3,26 @@
 #include "input_handling.h"
 #include "scenes.h"
 
+InputHandlingModel* input_handling_model_alloc() {
+    InputHandlingModel* instance = malloc(sizeof(InputHandlingModel));
+
+    instance->input_text_size = 30 * sizeof(char);
+    instance->input_text = malloc(instance->input_text_size);
+    return instance;
+}
+
+void input_handling_model_free(InputHandlingModel* instance) {
+    free(instance->input_text);
+    free(instance);
+}
+
 /**
  * Allocates the memory for an InputHandlingData
  */
 InputHandlingData* input_handling_data_alloc() {
     InputHandlingData* instance = malloc(sizeof(InputHandlingData));
+
+    instance->model = input_handling_model_alloc();
 
     instance->dialog_ex = dialog_ex_alloc();
     instance->text_input = text_input_alloc();
@@ -41,6 +56,7 @@ InputHandlingData* input_handling_data_alloc() {
  * Frees all data associated with this app. 
  */
 void input_handling_data_free(InputHandlingData* instance) {
+    input_handling_model_free(instance->model);
     view_dispatcher_remove_view(instance->view_dispatcher, InputHandlingViewTextInput);
     view_dispatcher_remove_view(instance->view_dispatcher, InputHandlingViewDialog);
 

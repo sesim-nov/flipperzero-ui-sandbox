@@ -7,7 +7,7 @@
  */
 typedef enum {
     InputHandlingSceneWelcome,
-//    InputHandlingSceneEntry,
+    InputHandlingSceneInput,
 //    InputHandlingSceneReport,
     InputHandlingSceneMAX,
 } InputHandlingScenes;
