@@ -8,7 +8,7 @@
 typedef enum {
     InputHandlingSceneWelcome,
     InputHandlingSceneInput,
-//    InputHandlingSceneReport,
+    InputHandlingSceneReport,
     InputHandlingSceneMAX,
 } InputHandlingScenes;
 

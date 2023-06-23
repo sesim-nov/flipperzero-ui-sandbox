@@ -1,9 +1,9 @@
 #include "input_handling.h"
-
+#include "scenes.h"
 void scene_input_result_callback(void* ctx) {
     InputHandlingData* instance = ctx;
 
-    scene_manager_previous_scene(instance->scene_manager);
+    scene_manager_next_scene(instance->scene_manager, InputHandlingSceneReport);
 }
 
 void scene_input_on_enter(void* ctx) {

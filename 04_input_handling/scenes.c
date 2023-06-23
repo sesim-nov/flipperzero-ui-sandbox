@@ -4,13 +4,14 @@
 #include "scenes.h"
 #include "scene_welcome.h"
 #include "scene_input.h"
+#include "scene_report.h"
 /*
  * These lists contain the enter, event and exit handlers for each scene, 
  * posted in the order the scenes are defined in the InputHandlingScenes enum.
  */
-const AppSceneOnEnterCallback input_handling_scene_enter_handlers[] = {scene_welcome_on_enter, scene_input_on_enter};
-const AppSceneOnEventCallback input_handling_scene_event_handlers[] = {scene_welcome_on_event, scene_input_on_event};
-const AppSceneOnExitCallback input_handling_scene_exit_handlers[] = {scene_welcome_on_exit, scene_input_on_exit};
+const AppSceneOnEnterCallback input_handling_scene_enter_handlers[] = {scene_welcome_on_enter, scene_input_on_enter, scene_report_on_enter};
+const AppSceneOnEventCallback input_handling_scene_event_handlers[] = {scene_welcome_on_event, scene_input_on_event, scene_report_on_event};
+const AppSceneOnExitCallback input_handling_scene_exit_handlers[] = {scene_welcome_on_exit, scene_input_on_exit, scene_report_on_exit};
 
 const SceneManagerHandlers input_handling_scene_manager_handlers = {
     .on_enter_handlers = input_handling_scene_enter_handlers,
