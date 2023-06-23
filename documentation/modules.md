@@ -47,10 +47,12 @@ The overall lifecycle of a module is listed below. This tracks the module from c
 1. Allocation: The module is allocated using its associated helper function
 2. Initialization: The modules various parameters are set to represent a fully populated interface to display to the user. 
 3. Registration: The module instance is added to a view dispatcher, which makes it available for use by calling `view_dispatcher_switch_to_view`, likely inside of some input handling callback or another. 
-4. Scene Management: The module is used as part of a Scene Manager (I haven't done any scene manager work yet so this is a placeholder). 
 5. Deregistration: The module instance is disconnected from the view dispatcher. 
 6. Deallocation: The memory containing the module is freed. 
 
+## Scene management
+
+Scene management happens somewhat separately from the view dispatcher, but changes how the view dispatcher is used. The view dispatcher is still the primary component managing the actual views, but the scene manager takes over determining which view is showed when. 
 
 ## Dialog
 
@@ -110,3 +112,19 @@ This callback can be set by calling `file_browser_set_callback`.
 ### Sharing State
 
 The `FileBrowserCallback` does not share any internal state about the Browser object with the callback context. So, it is up to the user to make sure the selected file path information makes it into the context. The file browser allocation function signature lets you pass in a `result_path` variable of type `FuriString`. The internals of the file browser set the selected file path into that object before firing the `FileBrowserCallback` function. With that in mind, it would be prudent to allocate and store the `result_path` object in whatever context you pass into the `FileBrowserCallback`.
+
+## Text Input
+
+Text input is, predictably, a screen that shows a virtual keyboard that the user can use to enter an arbitrary text string. 
+
+### Contained in
+
+`$FIRMWARE_ROOT/applications/services/gui/modules/text_input.h`
+
+### Prerequisites
+
+In order to actually use a text input, the data model for the application has to contain a buffer that can be used to write the entered string into. 
+
+### Sharing State
+
+The text input shares state with the application in much the same way the file browser does. the `text_input_set_result_callback` takes the usual callback argument, but also takes a buffer and buffer size, which sets the buffer used to hold the input string. 
