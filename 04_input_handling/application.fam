@@ -1,0 +1,13 @@
+App(
+    appid="input_handling",
+    apptype=FlipperAppType.EXTERNAL,
+    name="Input Handling",
+    entry_point="input_handling_app",
+    stack_size=1 * 1024,
+    cdefines=["APP_INPUTHANDLING"],
+    requires=[
+        "gui",
+    ],
+    order=10,
+    fap_category="Testing",
+)
